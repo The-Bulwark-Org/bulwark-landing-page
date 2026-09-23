@@ -14,7 +14,7 @@ export function Hero() {
         </h1>
         <p className="hero__subtext">
           You don't have to do this alone. Take the first step toward
-          breaking free from addiction and building a healthier future.
+          breaking free from pornography addiction and building a healthier future.
         </p>
         <CTAButton href="#">Join our waitlist</CTAButton>
       </div>
