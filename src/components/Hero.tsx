@@ -16,7 +16,7 @@ export function Hero() {
           You don't have to do this alone. Take the first step toward
           breaking free from pornography addiction and building a healthier future.
         </p>
-        <CTAButton href="#">Join our waitlist</CTAButton>
+        <CTAButton href="#waitlist">Join our waitlist</CTAButton>
       </div>
 
       {/* 4. Illustration – decorative, cropped at bottom */}
