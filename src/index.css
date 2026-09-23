@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/* ── Design Tokens ──────────────────────────────────────────── */
+:root {
+  --sky-top: #C9EDFF;
+  --bg: #FFFFFF;
+  --text-primary: #000000;
+  --text-muted: #8E8E8E;
+  --cta-bg: #FDB73A;
+  --cta-text: #000000;
+  --green-dark: #2F9642;
+  --green-light: #52AE3F;
+}
+
+/* ── Base reset / font ──────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Sora', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+
+/* ── Hero Section ───────────────────────────────────────────── */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 640px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Vertical sky gradient: #C9EDFF top fading to white by ~33% */
+  background: linear-gradient(
+    to bottom,
+    var(--sky-top) 0%,
+    var(--bg) 33%,
+    var(--bg) 100%
+  );
+}
+
+/* ── Logo Lockup ────────────────────────────────────────────── */
+.logo {
+  margin-top: clamp(60px, 10.8vh, 120px);
+  width: 11.4vw;
+  min-width: 130px;
+  max-width: 200px;
+  height: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Text & CTA Block ───────────────────────────────────────── */
+.hero__content {
+  margin-top: clamp(140px, 24.5vh, 280px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  padding: 0 16px;
+  z-index: 2;
+}
+
+/* ── Headline ───────────────────────────────────────────────── */
+.hero__headline {
+  font-size: clamp(28px, 3.5vw, 54px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  max-width: none;
+}
+
+/* ── Subcopy ────────────────────────────────────────────────── */
+.hero__subtext {
+  font-size: clamp(14px, 1.3vw, 20px);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--text-muted);
+  margin-top: 10px;
+  max-width: none;
+}
+
+/* ── CTA Button ─────────────────────────────────────────────── */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: clamp(28px, 3.7vh, 48px);
+  width: clamp(160px, 13.5vw, 214px);
+  height: clamp(48px, 4.17vw, 64px);
+  padding: 0 clamp(24px, 2.78vw, 44px);
+  border-radius: 9999px;
+  border: none;
+  background-color: var(--cta-bg);
+  color: var(--cta-text);
+  font-family: inherit;
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 150ms ease, transform 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+  outline-offset: 2px;
+  white-space: nowrap;
+}
+
+.cta-button:hover {
+  background-color: #f2aa2c;
+}
+
+.cta-button:active {
+  transform: scale(0.98);
+}
+
+.cta-button:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+/* ── Bushes Illustration ────────────────────────────────────── */
+.hero__illustration {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 43.9vw;
+  min-width: 320px;
+  max-width: 720px;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+/* ── Responsive single-line enforcement & mobile behavior ──── */
+@media (min-width: 768px) {
+  .hero__headline {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__subtext {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 767px) {
+  .logo {
+    margin-top: 48px;
+    width: 140px;
+  }
+
+  .hero__content {
+    margin-top: 80px;
+  }
+
+  .hero__headline {
+    font-size: clamp(24px, 6vw, 32px);
+    white-space: normal;
+  }
+
+  .hero__subtext {
+    font-size: clamp(14px, 3.5vw, 16px);
+    white-space: normal;
+    margin-top: 12px;
+  }
+
+  .cta-button {
+    width: auto;
+    min-width: 180px;
+    height: 52px;
+    padding: 0 32px;
+    font-size: 15px;
+    margin-top: 32px;
+  }
+
+  .hero__illustration {
+    width: 85vw;
+    min-width: 280px;
+  }
+}
+
+/* ── Reduced-motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cta-button {
+    transition: none;
+  }
+}
