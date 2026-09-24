@@ -32,11 +32,13 @@ export function WaitlistSection({ onConfirmed }: WaitlistSectionProps) {
           {/* 1. Logo */}
           <Logo className="waitlist-logo" />
 
-          {/* 2. Info Card */}
-          <InfoCard />
+          <div className="waitlist-card-wrapper">
+            {/* 2. Info Card */}
+            <InfoCard />
 
-          {/* 3. Email Form */}
-          <WaitlistForm onSuccess={handleSuccess} />
+            {/* 3. Email Form */}
+            <WaitlistForm onSuccess={handleSuccess} />
+          </div>
         </div>
       </div>
     </section>
