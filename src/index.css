@@ -723,6 +723,25 @@ body {
   }
 }
 
+/* 600-1050ms: logo fades in and eases in from top */
+.screen3-section.is-animating .logo {
+  opacity: 0;
+  transform: translateY(-12px);
+  animation: logoFadeIn 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 600ms;
+}
+
+@keyframes logoFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* 760-1360ms: badge scales .6 to 1 and fades in, cubic-bezier(.34,1.56,.64,1), 600ms */
 .screen3-section.is-animating .screen3__badge {
   opacity: 0;
@@ -828,6 +847,7 @@ body {
     animation: cardFormFadeOut 200ms ease forwards !important;
     animation-delay: 0ms !important;
   }
+  .screen3-section.is-animating .logo,
   .screen3-section.is-animating .screen3__sky-gradient,
   .screen3-section.is-animating .screen3__bushes,
   .screen3-section.is-animating .screen3__badge,
