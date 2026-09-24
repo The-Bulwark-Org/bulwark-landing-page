@@ -877,7 +877,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0 24px 6svh;
+    padding: 0 24px 16svh;
     position: static;
     transform: none;
     bottom: auto;
@@ -887,14 +887,14 @@ body {
     z-index: 2;
   }
 
-  /* 4. Bushes (both screens, 115vw, bottom: 0) */
+  /* 4. Bushes (both screens, 100vw, bottom: 0) */
   .hero__illustration,
   .screen3__bushes {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 115vw;
+    width: 100vw;
     max-width: none;
     pointer-events: none;
     z-index: 1;
@@ -912,7 +912,11 @@ body {
   }
 
   .hero__headline {
-    max-width: 290px;
+    width: 100%;
+    max-width: none;
+    padding-inline: 24px;
+    text-align: center;
+    text-wrap: balance;
   }
 
   /* 6. Subcopy (both screens) */
@@ -993,5 +997,183 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
+  }
+}
+
+/* ── Tablet Portrait Layout (768–1100px, portrait) ───────────── */
+@media (min-width: 768px) and (max-width: 1100px) and (orientation: portrait) {
+
+  /* 1. Stage — screens 1 and 3 */
+  .hero,
+  .screen3-section {
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(
+      to bottom,
+      var(--sky-top) 0%,
+      var(--bg) 33%,
+      var(--bg) 100%
+    );
+  }
+
+  /* 2. Content group wrapper — screens 1 and 3 */
+  .hero__content,
+  .screen3__content {
+    position: static;
+    transform: none;
+    inset: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16vw 6vw calc(23.6vw + 5vw);
+    bottom: auto;
+    left: auto;
+    margin: 0;
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+  }
+
+  /* 3. Bushes — screens 1 and 3 */
+  .hero__illustration,
+  .screen3__bushes {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 78vw;
+    max-width: none;
+    min-width: 0;
+    height: auto;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* 4. Headline — screens 1 and 3 */
+  .hero__headline,
+  .screen3__headline {
+    font-size: clamp(44px, 6.2vw, 64px);
+    line-height: 1.1;
+    text-align: center;
+    text-wrap: balance;
+    max-width: none;
+    padding-inline: 6vw;
+    white-space: normal;
+    margin: 0;
+  }
+
+  /* 5. Subcopy — screens 1 and 3 */
+  .hero__subtext,
+  .screen3__subcopy {
+    font-size: clamp(18px, 2.3vw, 24px);
+    line-height: 1.5;
+    text-align: center;
+    text-wrap: balance;
+    max-width: 70vw;
+    margin-inline: auto;
+    margin-top: clamp(12px, 1.8vw, 20px);
+    margin-bottom: 0;
+    white-space: normal;
+  }
+
+  /* 6. Badge — screen 3 */
+  .screen3__badge {
+    width: clamp(104px, 14vw, 150px);
+    height: clamp(104px, 14vw, 150px);
+    margin-bottom: clamp(24px, 3.4vw, 40px);
+    flex-shrink: 0;
+  }
+
+  .screen3__badge .success-badge-container,
+  .screen3__badge .success-badge-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .screen3__text-live {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* 7. CTA Button — screen 1 */
+  .cta-button {
+    height: clamp(56px, 7vw, 72px);
+    padding: 0 clamp(36px, 5vw, 52px);
+    font-size: clamp(17px, 2.2vw, 22px);
+    border-radius: 9999px;
+    width: auto;
+    min-width: 0;
+    margin-top: clamp(32px, 4.5vw, 56px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 8. Screen 2 — email screen */
+  .waitlist-section {
+    height: 100svh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .waitlist-panel {
+    height: calc(100svh - 12px);
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 12px 12px;
+  }
+
+  .waitlist-logo {
+    margin-top: clamp(60px, 10.8vh, 120px);
+    margin-bottom: clamp(28px, 4vh, 48px);
+    width: 11.4vw;
+    min-width: 130px;
+    max-width: 200px;
+  }
+
+  .waitlist-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: min(86vw, 760px);
+    max-width: none;
+    padding-bottom: calc(23.6vw + 5vw);
+  }
+
+  .info-card {
+    font-size: clamp(16px, 2vw, 20px);
+    padding: clamp(18px, 2.3vw, 36px);
+    width: 100%;
+  }
+
+  .dot-row__dot {
+    width: clamp(14px, 1.5vw, 22px);
+    height: clamp(14px, 1.5vw, 22px);
+  }
+
+  .waitlist-pill {
+    width: 100%;
+    height: clamp(52px, 6.5vw, 70px);
+    font-size: clamp(16px, 2vw, 20px);
+  }
+
+  .waitlist-pill__button {
+    height: clamp(38px, 4.8vw, 54px);
+    font-size: clamp(15px, 1.8vw, 19px);
+    padding: 0 clamp(20px, 2.5vw, 32px);
   }
 }
