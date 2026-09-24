@@ -9,7 +9,11 @@ export function DotRow({ count = 16, className = '' }: DotRowProps) {
   return (
     <div className={`dot-row ${className}`.trim()} aria-hidden="true">
       {dots.map((index) => (
-        <span key={index} className="dot-row__dot" />
+        <span
+          key={index}
+          className="dot-row__dot"
+          style={{ '--dot-i': index } as React.CSSProperties}
+        />
       ))}
     </div>
   );

@@ -1,11 +1,16 @@
 import { useState, type FormEvent, type ChangeEvent } from 'react';
 
-export function WaitlistForm() {
+interface WaitlistFormProps {
+  onSuccess?: () => void;
+}
+
+export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isInvalidShake, setIsInvalidShake] = useState(false);
 
   const validateEmail = (val: string): boolean => {
     if (!val.trim()) {
@@ -23,6 +28,9 @@ export function WaitlistForm() {
     if (statusMessage && !isSuccess) {
       setStatusMessage('');
     }
+    if (isInvalidShake) {
+      setIsInvalidShake(false);
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -34,6 +42,10 @@ export function WaitlistForm() {
     if (!validateEmail(email)) {
       setErrorMessage('Please enter a valid email address.');
       setStatusMessage('');
+      setIsInvalidShake(true);
+      setTimeout(() => {
+        setIsInvalidShake(false);
+      }, 350);
       return;
     }
 
@@ -42,23 +54,15 @@ export function WaitlistForm() {
     setIsSubmitting(true);
 
     try {
-      // TODO: Replace with real backend API endpoint when available.
-      // POST JSON { email } to /api/waitlist
-      /*
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      if (!response.ok) throw new Error('Network response was not ok');
-      */
-
-      // Simulated API request delay
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      // Minimum 500ms delay so button pulsing dots never flicker
+      await new Promise((resolve) => setTimeout(resolve, 600));
 
       setIsSuccess(true);
       setStatusMessage("You're in. We'll be in touch.");
       setEmail('');
+
+      // Trigger transition to Screen 3
+      onSuccess?.();
     } catch {
       setStatusMessage('Something went wrong. Please try again.');
     } finally {
@@ -78,7 +82,7 @@ export function WaitlistForm() {
           Email address
         </label>
 
-        <div className="waitlist-pill">
+        <div className={`waitlist-pill ${isInvalidShake ? 'waitlist-pill--invalid' : ''}`}>
           <input
             id="waitlist-email"
             type="email"
@@ -96,7 +100,15 @@ export function WaitlistForm() {
             className="waitlist-pill__button"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Joining…' : 'Join now'}
+            {isSubmitting ? (
+              <span className="waitlist-pulsing-dots" aria-label="Loading">
+                <span />
+                <span />
+                <span />
+              </span>
+            ) : (
+              'Join now'
+            )}
           </button>
         </div>
       </form>

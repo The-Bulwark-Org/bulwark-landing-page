@@ -2,6 +2,7 @@
 
 /* ── Design Tokens ──────────────────────────────────────────── */
 :root {
+  --u: min(1vw, 1.6svh);
   --sky-top: #C9EDFF;
   --bg: #FFFFFF;
   --text-primary: #000000;
@@ -64,6 +65,8 @@ body {
 
 /* ── Logo Lockup ────────────────────────────────────────────── */
 .logo {
+  position: relative;
+  z-index: 2;
   margin-top: clamp(60px, 10.8vh, 120px);
   width: 11.4vw;
   min-width: 130px;
@@ -171,41 +174,6 @@ body {
   }
 }
 
-@media (max-width: 767px) {
-  .logo {
-    margin-top: 48px;
-    width: 140px;
-  }
-
-  .hero__content {
-    margin-top: 80px;
-  }
-
-  .hero__headline {
-    font-size: clamp(24px, 6vw, 32px);
-    white-space: normal;
-  }
-
-  .hero__subtext {
-    font-size: clamp(14px, 3.5vw, 16px);
-    white-space: normal;
-    margin-top: 12px;
-  }
-
-  .cta-button {
-    width: auto;
-    min-width: 180px;
-    height: 52px;
-    padding: 0 32px;
-    font-size: 15px;
-    margin-top: 32px;
-  }
-
-  .hero__illustration {
-    width: 85vw;
-    min-width: 280px;
-  }
-}
 
 /* ── Reduced-motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
@@ -510,3 +478,520 @@ body {
   }
 }
 
+/* ── Email pill shake & validation hairline ─────────────────── */
+@keyframes pillShake {
+  0%, 100% { transform: translateX(0); }
+  16.6% { transform: translateX(-6px); }
+  33.3% { transform: translateX(6px); }
+  50% { transform: translateX(-6px); }
+  66.6% { transform: translateX(6px); }
+  83.3% { transform: translateX(-6px); }
+}
+
+.waitlist-pill--invalid {
+  animation: pillShake 300ms ease-in-out;
+  border: 1px solid rgba(211, 47, 47, 0.45);
+}
+
+/* ── Pulsing Dots for submit button ─────────────────────────── */
+.waitlist-pulsing-dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 16px;
+}
+
+.waitlist-pulsing-dots span {
+  width: 4px;
+  height: 4px;
+  background-color: currentColor;
+  border-radius: 50%;
+  animation: waitlistDotPulse 1s infinite ease-in-out;
+}
+
+.waitlist-pulsing-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.waitlist-pulsing-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes waitlistDotPulse {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* ── Screen 3: "You are in" Confirmation Screen ──────────────── */
+.screen3-section {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(
+    to bottom,
+    var(--sky-top) 0%,
+    var(--bg) 33%,
+    var(--bg) 100%
+  );
+}
+
+.screen3__sky-gradient {
+  display: none;
+}
+
+
+/* Text stack (badge, headline, subcopy as one centred group anchored to bushes) */
+.screen3__content {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc((13.3 + 6.90 + 4.4) * var(--u));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  padding: 0 16px;
+  z-index: 2;
+}
+
+.screen3__badge {
+  width: calc(6.94 * var(--u));
+  height: calc(6.94 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.screen3__badge .success-badge-container,
+.screen3__badge .success-badge-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.screen3__text-live {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.screen3__headline {
+  font-size: calc(3.36 * var(--u));
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-top: calc(2.21 * var(--u));
+  max-width: none;
+  outline: none;
+}
+
+.screen3__subcopy {
+  font-size: calc(1.11 * var(--u));
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-top: calc(0.21 * var(--u));
+  margin-bottom: 0;
+  max-width: none;
+  white-space: nowrap;
+}
+
+.screen3__bushes {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(43.9 * var(--u));
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+
+/* ── Transition Sequence (Screen 2 -> Screen 3) ──────────────── */
+.waitlist-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* 0-480ms: 16 circles in the card fill left to right with #FDB73A, 28ms stagger, scale 1 -> 1.15 -> 1 */
+.waitlist-section--animating .dot-row__dot {
+  animation: dotFillWave 180ms ease forwards;
+  animation-delay: calc(var(--dot-i, 0) * 28ms);
+}
+
+@keyframes dotFillWave {
+  0% {
+    background-color: #FFFFFF;
+    transform: scale(1);
+  }
+  50% {
+    background-color: #FDB73A;
+    transform: scale(1.15);
+  }
+  100% {
+    background-color: #FDB73A;
+    transform: scale(1);
+  }
+}
+
+/* 420-880ms: card and email pill fade out, translateY(-16px), scale(.985) */
+.waitlist-section--animating .info-card,
+.waitlist-section--animating .waitlist-form-wrapper {
+  animation: cardFormFadeOut 460ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 420ms;
+}
+
+@keyframes cardFormFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.985);
+    visibility: hidden;
+  }
+}
+
+/* When animating, Screen 3 sits over the container */
+.waitlist-section--animating .screen3-section {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* 500-1200ms: sky gradient fades in from the top (700ms duration) */
+.screen3-section.is-animating .screen3__sky-gradient {
+  opacity: 0;
+  animation: skyGradientIn 700ms ease forwards;
+  animation-delay: 500ms;
+}
+
+@keyframes skyGradientIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* 600-1400ms: bushes rise from translateY(120px) to 0, cubic-bezier(.22,1,.36,1), 800ms */
+.screen3-section.is-animating .screen3__bushes {
+  opacity: 0;
+  transform: translateX(-50%) translateY(120px);
+  animation: bushesRiseIn 800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 600ms;
+}
+
+@keyframes bushesRiseIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(120px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* 760-1360ms: badge scales .6 to 1 and fades in, cubic-bezier(.34,1.56,.64,1), 600ms */
+.screen3-section.is-animating .screen3__badge {
+  opacity: 0;
+  transform: scale(0.6);
+  animation: badgeScaleIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 760ms;
+}
+
+@keyframes badgeScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 1000-1400ms: checkmark draws via stroke-dashoffset, 400ms */
+.success-badge-container.is-animating .success-badge__check-base,
+.success-badge-container.is-animating .success-badge__check-shadow,
+.success-badge-container.is-animating .success-badge__check-path,
+.success-badge-container.is-animating .success-badge__check-ridge {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: checkDraw 400ms ease forwards;
+  animation-delay: 1000ms;
+}
+
+@keyframes checkDraw {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 1250-1650ms: sparkles scale 0 to 1 to .85 with a small rotation, 120ms stagger */
+.success-badge-container.is-animating .success-badge__sparkle-1 {
+  opacity: 0;
+  transform-origin: 0 0;
+  animation: sparkleScale 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 1250ms;
+}
+
+.success-badge-container.is-animating .success-badge__sparkle-2 {
+  opacity: 0;
+  transform-origin: 0 0;
+  animation: sparkleScale 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 1370ms;
+}
+
+@keyframes sparkleScale {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-15deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1) rotate(6deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(0.85) rotate(0deg);
+  }
+}
+
+/* 1100-1600ms: headline then subcopy fade in, translateY(12px) to 0, 450ms, 90ms apart */
+.screen3-section.is-animating .screen3__headline {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: textFadeIn 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 1100ms;
+}
+
+.screen3-section.is-animating .screen3__subcopy {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: textFadeIn 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 1190ms;
+}
+
+@keyframes textFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Reduced motion override: skip sequence and do a plain 200ms cross-fade ─ */
+@media (prefers-reduced-motion: reduce) {
+  .waitlist-section--animating .dot-row__dot {
+    animation: none !important;
+  }
+  .waitlist-section--animating .info-card,
+  .waitlist-section--animating .waitlist-form-wrapper {
+    animation: cardFormFadeOut 200ms ease forwards !important;
+    animation-delay: 0ms !important;
+  }
+  .screen3-section.is-animating .screen3__sky-gradient,
+  .screen3-section.is-animating .screen3__bushes,
+  .screen3-section.is-animating .screen3__badge,
+  .screen3-section.is-animating .screen3__headline,
+  .screen3-section.is-animating .screen3__subcopy {
+    animation: textFadeIn 200ms ease forwards !important;
+    animation-delay: 0ms !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .success-badge-container.is-animating .success-badge__check-base,
+  .success-badge-container.is-animating .success-badge__check-shadow,
+  .success-badge-container.is-animating .success-badge__check-path,
+  .success-badge-container.is-animating .success-badge__check-ridge {
+    stroke-dashoffset: 0 !important;
+    animation: none !important;
+  }
+  .success-badge-container.is-animating .success-badge__sparkle-1,
+  .success-badge-container.is-animating .success-badge__sparkle-2 {
+    opacity: 1 !important;
+    transform: scale(0.85) !important;
+    animation: none !important;
+  }
+}
+
+/* ── Mobile Layout (max-width: 767px) ────────────────────────── */
+@media (max-width: 767px) {
+  /* 1. Page Layout (both screens) */
+  .hero,
+  .screen3-section {
+    height: 100svh;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* 2. Logo (identical on both screens, 44px top offset, same size) */
+  .logo {
+    margin-top: 44px;
+    width: 140px;
+    height: auto;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* 3. Content Group Wrapper (flex: 1, centred between logo and bushes) */
+  .hero__content,
+  .screen3__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px 6svh;
+    position: static;
+    transform: none;
+    bottom: auto;
+    left: auto;
+    margin: 0;
+    width: 100%;
+    z-index: 2;
+  }
+
+  /* 4. Bushes (both screens, 115vw, bottom: 0) */
+  .hero__illustration,
+  .screen3__bushes {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 115vw;
+    max-width: none;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* 5. Headlines (both screens) */
+  .hero__headline,
+  .screen3__headline {
+    font-size: clamp(30px, 8.4vw, 40px);
+    line-height: 1.1;
+    text-align: center;
+    text-wrap: balance;
+    margin: 0;
+    white-space: normal;
+  }
+
+  .hero__headline {
+    max-width: 290px;
+  }
+
+  /* 6. Subcopy (both screens) */
+  .hero__subtext,
+  .screen3__subcopy {
+    text-wrap: balance;
+    max-width: 330px;
+    margin-inline: auto;
+    margin-top: 12px;
+    margin-bottom: 0;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.4;
+    white-space: normal;
+  }
+
+  .screen3__subcopy {
+    max-width: 290px;
+  }
+
+  /* 7. Button (Screen 1) */
+  .cta-button {
+    min-height: 48px;
+    min-width: 44px;
+    padding: 0 28px;
+    font-size: 15px;
+    margin-top: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+  }
+
+  /* 8. Badge & live region (Screen 3) */
+  .screen3__badge {
+    width: 89px;
+    height: 89px;
+    margin-bottom: 24px;
+    flex-shrink: 0;
+  }
+
+  .screen3__text-live {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* 9. Screen 2 (Email screen) */
+  .waitlist-section {
+    min-height: 100svh;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .waitlist-panel {
+    min-height: calc(100svh - 12px);
+    height: calc(100svh - 12px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 12px 12px 12px;
+  }
+
+  .waitlist-logo {
+    margin-top: 44px;
+    margin-bottom: clamp(14px, 2.5vh, 24px);
+    width: 140px;
+  }
+
+  .waitlist-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+}
