@@ -54,17 +54,36 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
     setIsSubmitting(true);
 
     try {
-      // Minimum 500ms delay so button pulsing dots never flicker
-      await new Promise((resolve) => setTimeout(resolve, 600));
+      const response = await fetch('http://localhost:3000/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok && data.status === 'error') {
+        const msg = data.errors?.email?.[0] || data.message || 'Validation failed';
+        setErrorMessage(msg);
+        setIsInvalidShake(true);
+        setTimeout(() => setIsInvalidShake(false), 350);
+        return;
+      }
 
       setIsSuccess(true);
-      setStatusMessage("You're in. We'll be in touch.");
+      setStatusMessage(
+        data.status === 'already_joined'
+          ? "You're already on the waitlist!"
+          : "You're in. We'll be in touch."
+      );
       setEmail('');
 
       // Trigger transition to Screen 3
       onSuccess?.();
     } catch {
-      setStatusMessage('Something went wrong. Please try again.');
+      setErrorMessage('Unable to connect to server. Please try again.');
+      setIsInvalidShake(true);
+      setTimeout(() => setIsInvalidShake(false), 350);
     } finally {
       setIsSubmitting(false);
     }
