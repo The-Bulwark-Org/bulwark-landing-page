@@ -13,8 +13,8 @@ export function Hero() {
           Become the best version of yourself
         </h1>
         <p className="hero__subtext">
-          You don't have to do this alone. Take the first step toward
-          breaking free from porn addiction and building a healthier future.
+          You don’t have to do this alone. Take the first step toward
+          breaking free from porn addiction with practical tools that actually help.
         </p>
         <CTAButton href="#waitlist">Join our waitlist</CTAButton>
       </div>
