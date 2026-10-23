@@ -1,11 +1,12 @@
 interface LogoProps {
   className?: string;
+  src?: string;
 }
 
-export function Logo({ className = '' }: LogoProps) {
+export function Logo({ className = '', src = '/assets/logo.svg' }: LogoProps) {
   return (
     <img
-      src="/assets/logo.svg"
+      src={src}
       alt="Bulwark"
       width={166}
       height={47}

@@ -1,69 +1,66 @@
-import { useEffect, useRef } from 'react';
-import { Logo } from './Logo';
-import { SuccessBadge } from './SuccessBadge';
+import { useEffect } from 'react';
+import { scrollToInstant } from '../scrollToInstant';
 
 interface ConfirmationScreenProps {
+  /** Returns to the landing page. Omitted by legacy callers. */
+  onClose?: () => void;
+  /** Kept for backwards compatibility with the old animated intro. */
   isAnimating?: boolean;
 }
 
-export function ConfirmationScreen({ isAnimating = false }: ConfirmationScreenProps) {
-  const headlineRef = useRef<HTMLHeadingElement>(null);
+export function ConfirmationScreen({ onClose }: ConfirmationScreenProps) {
+  useEffect(() => {
+    scrollToInstant(0);
+  }, []);
 
   useEffect(() => {
-    if (!isAnimating) {
-      window.scrollTo(0, 0);
-    }
-    // Move focus to headline when animation finishes (1650ms) or immediately if settled
-    const delay = isAnimating ? 1700 : 80;
-    const timer = setTimeout(() => {
-      headlineRef.current?.focus({ preventScroll: true });
-    }, delay);
-    return () => clearTimeout(timer);
-  }, [isAnimating]);
+    if (!onClose) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
 
   return (
-    <section
-      className={`screen3-section ${isAnimating ? 'is-animating' : 'is-settled'}`}
-      id="confirmation"
-      aria-label="Waitlist Confirmation"
-    >
+    <section className="wl-page wl-page--confirm" aria-label="Waitlist confirmation">
+      <div className="wl-page__media">
+        <img
+          className="wl-page__img"
+          src="/assets/waitlist-confirmed-crowd.png"
+          alt="A group of friends holding hands in a circle on a sunlit hilltop"
+          draggable={false}
+        />
+        <button
+          type="button"
+          className="wl-page__close"
+          aria-label="Close and return to the home page"
+          onClick={onClose}
+        >
+          <img src="/assets/close-icon.svg" alt="" aria-hidden="true" draggable={false} />
+        </button>
+      </div>
 
-      {/* 2. Logo lockup — identical to Screen 1 */}
-      <Logo className="logo" />
+      <div className="wl-page__panel">
+        <div className="wl-page__content">
+          <img
+            className="wl-confirm__badge"
+            src="/assets/Committed%20Badge.svg"
+            alt=""
+            aria-hidden="true"
+            draggable={false}
+          />
 
-      {/* 3+4+5. Success content block */}
-      <div className="screen3__content">
-        {/* Success badge: 105px ring, 89px holographic disc, bevel checkmark, 2 sparkles */}
-        <div className="screen3__badge">
-          <SuccessBadge isAnimating={isAnimating} />
-        </div>
+          <h1 className="wl-confirm__title">You have taken your first step.</h1>
 
-        {/* aria-live polite wrapper — announces headline + subcopy after animation */}
-        <div aria-live="polite" className="screen3__text-live">
-          <h1
-            ref={headlineRef}
-            tabIndex={-1}
-            className="screen3__headline"
-          >
-            You are in
-          </h1>
-
-          <p className="screen3__subcopy">
-            You'll be the first to know about Bulwark when we launch.
+          <p className="wl-confirm__text">
+            We'll let you know when something worth showing is ready. Thanks for your
+            patience.
           </p>
         </div>
       </div>
-
-      {/* 6. Bushes — same asset, same position as Screen 1 */}
-      <img
-        src="/assets/grass.svg"
-        alt=""
-        aria-hidden="true"
-        width={633}
-        height={192}
-        className="screen3__bushes"
-        draggable={false}
-      />
     </section>
   );
 }

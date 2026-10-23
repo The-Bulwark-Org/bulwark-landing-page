@@ -1,20 +1,55 @@
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Hero } from './components/Hero';
-import { WaitlistSection } from './components/WaitlistSection';
+import { AboutSection } from './components/AboutSection';
+import { JourneySection } from './components/JourneySection';
+import { FaqSection } from './components/FaqSection';
+import { BlogsSection } from './components/BlogsSection';
+import { SiteFooter } from './components/SiteFooter';
+import { WaitlistPage } from './components/WaitlistPage';
 import { ConfirmationScreen } from './components/ConfirmationScreen';
+import { scrollToInstant } from './scrollToInstant';
+
+type View = 'landing' | 'waitlist' | 'confirmed';
 
 function App() {
-  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [view, setView] = useState<View>('landing');
+  const landingScroll = useRef<number | null>(null);
 
-  if (isConfirmed) {
-    return <ConfirmationScreen isAnimating={false} />;
+  useLayoutEffect(() => {
+    if (view === 'landing' && landingScroll.current !== null) {
+      const target = landingScroll.current;
+      landingScroll.current = null;
+      // Force layout for the freshly mounted landing page before restoring,
+      // otherwise scrollTo clamps against the previous (shorter) document.
+      void document.documentElement.scrollHeight;
+      scrollToInstant(target);
+    }
+  }, [view]);
+
+  const openWaitlist = () => {
+    landingScroll.current = window.scrollY;
+    setView('waitlist');
+  };
+
+  const closeWaitlist = () => setView('landing');
+
+  if (view === 'confirmed') {
+    return <ConfirmationScreen onClose={closeWaitlist} />;
+  }
+
+  if (view === 'waitlist') {
+    return <WaitlistPage onClose={closeWaitlist} onConfirmed={() => setView('confirmed')} />;
   }
 
   return (
-    <>
-      <Hero />
-      <WaitlistSection onConfirmed={() => setIsConfirmed(true)} />
-    </>
+    <div className="page-dark">
+      <Hero onJoinWaitlist={openWaitlist} />
+      <AboutSection onJoinWaitlist={openWaitlist} />
+      <JourneySection />
+      <FaqSection onJoinWaitlist={openWaitlist} />
+      <BlogsSection />
+      <SiteFooter onJoinWaitlist={openWaitlist} />
+    </div>
   );
 }
 
