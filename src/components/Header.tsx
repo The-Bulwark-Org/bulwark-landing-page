@@ -7,9 +7,9 @@ const menuLinks = [
 ];
 
 const socialLinks = [
-  { label: 'X (Formally Twitter)', href: '#' },
-  { label: 'LinkedIn', href: '#' },
-  { label: 'Instagram', href: '#' },
+  { label: 'X (Formerly Twitter)', href: 'https://x.com/joinbulwark?s=11' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/joinbulwark?skipRedirect=true&viewAsMember=true' },
+  { label: 'Instagram', href: 'https://www.instagram.com/joinbulwark?stkn=MWduZ3YzZ3NjNDlkMQ%3D%3D&utm_source=qr' },
 ];
 
 interface HeaderProps {
