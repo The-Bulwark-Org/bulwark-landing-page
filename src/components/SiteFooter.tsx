@@ -3,17 +3,17 @@ import { CTAButton } from './CTAButton';
 const socials = [
   {
     label: 'X',
-    href: '#',
+    href: 'https://x.com/joinbulwark?s=11',
     icon: '/assets/X-icon.svg',
   },
   {
     label: 'LinkedIn',
-    href: '#',
+    href: 'https://www.linkedin.com/company/joinbulwark?skipRedirect=true&viewAsMember=true',
     icon: '/assets/linkedin-icon.svg',
   },
   {
     label: 'Instagram',
-    href: '#',
+    href: 'https://www.instagram.com/joinbulwark?stkn=MWduZ3YzZ3NjNDlkMQ%3D%3D&utm_source=qr',
     icon: '/assets/IG-icon.svg',
   },
 ];
