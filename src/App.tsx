@@ -7,6 +7,7 @@ import { BlogsSection } from './components/BlogsSection';
 import { SiteFooter } from './components/SiteFooter';
 import { WaitlistPage } from './components/WaitlistPage';
 import { ConfirmationScreen } from './components/ConfirmationScreen';
+import { BlogPage } from './components/BlogPage';
 import { scrollToInstant } from './scrollToInstant';
 
 type View = 'landing' | 'waitlist' | 'confirmed';
@@ -39,6 +40,10 @@ function App() {
 
   if (view === 'waitlist') {
     return <WaitlistPage onClose={closeWaitlist} onConfirmed={() => setView('confirmed')} />;
+  }
+
+  if (window.location.pathname.replace(/\/+$/, '') === '/blog') {
+    return <BlogPage onJoinWaitlist={openWaitlist} />;
   }
 
   return (

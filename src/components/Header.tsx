@@ -3,7 +3,7 @@ import { Logo } from './Logo';
 
 const menuLinks = [
   { label: 'FAQ', href: '#faq' },
-  { label: 'Blog', href: '#blog' },
+  { label: 'Blog', href: '/blog' },
 ];
 
 const socialLinks = [
@@ -49,7 +49,7 @@ export function Header({ onJoinWaitlist }: HeaderProps) {
           <a className="site-nav__pill" href="#faq">
             FAQ
           </a>
-          <a className="site-nav__pill" href="#blog">
+          <a className="site-nav__pill" href="/blog">
             Blog
           </a>
           <button
