@@ -83,9 +83,10 @@ body {
   text-decoration: none;
 }
 
-.site-header__logo.logo {
+.site-header__logo.bulwark-logo {
   margin: 0;
-  width: clamp(112px, 8.7vw, 150px);
+  width: 99.0777px;
+  height: 27.8168px;
   min-width: 0;
   max-width: none;
 }
@@ -1810,9 +1811,10 @@ body {
     z-index: 30;
   }
 
-  .site-header__logo.logo {
+  .site-header__logo.bulwark-logo {
     margin-top: 0;
-    width: 108px;
+    width: 99.0777px;
+    height: 27.8168px;
   }
 
   .site-nav {
@@ -2603,8 +2605,8 @@ body:has(.blog-page) {
 }
 
 .blog-page .site-header__logo.bulwark-logo {
-  width: 100px;
-  height: auto;
+  width: 99.0777px;
+  height: 27.8168px;
 }
 
 .blog-page > .site-header .site-nav > a[href="/blog"] {
@@ -2777,7 +2779,8 @@ body:has(.blog-page) {
   }
 
   .blog-page .site-header__logo.bulwark-logo {
-    width: 100px;
+    width: 99.0777px;
+    height: 27.8168px;
   }
 
   .blog-page .site-nav {
