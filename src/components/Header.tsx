@@ -41,7 +41,7 @@ export function Header({ onJoinWaitlist }: HeaderProps) {
   return (
     <>
       <header className="site-header">
-        <a className="site-header__brand" href="#hero" aria-label="Bulwark — home">
+        <a className="site-header__brand" href="/" aria-label="Bulwark — home">
           <Logo className="site-header__logo" src="/assets/logo-white.svg" />
         </a>
 
@@ -94,7 +94,12 @@ export function Header({ onJoinWaitlist }: HeaderProps) {
             <ul className="mobile-menu__links">
               {menuLinks.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} onClick={closeMenu}>
+                  <a
+                    href={link.href}
+                    target={link.href.startsWith('https://') ? '_blank' : undefined}
+                    rel={link.href.startsWith('https://') ? 'noopener noreferrer' : undefined}
+                    onClick={closeMenu}
+                  >
                     {link.label}
                   </a>
                 </li>

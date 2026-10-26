@@ -37,6 +37,8 @@ export function SiteFooter({ onJoinWaitlist }: SiteFooterProps) {
                 className="site-footer__social"
                 href={social.href}
                 aria-label={social.label}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <img src={social.icon} alt="" aria-hidden="true" draggable={false} />
               </a>
