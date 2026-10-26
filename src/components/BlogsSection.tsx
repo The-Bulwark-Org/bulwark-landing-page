@@ -12,14 +12,14 @@ const posts: BlogPost[] = [
     date: 'October 10, 2026',
     readTime: '12 min read',
     title: 'How Mindfulness Transforms Workplace Productivity',
-    href: '#blog',
+    href: '/blog',
   },
   {
     image: '/assets/Article Image (1).png',
     date: 'October 3, 2026',
     readTime: '7 min read',
     title: 'The Science of Habit Formation: Building a Better You',
-    href: '#blog',
+    href: '/blog',
   },
 ];
 
@@ -30,7 +30,7 @@ export function BlogsSection() {
         Check out blogs from Bulwark
       </h2>
 
-      <a className="blogs__link" href="#blog">
+      <a className="blogs__link" href="/blog">
         Go to blog
         <svg
           viewBox="0 0 24 24"
