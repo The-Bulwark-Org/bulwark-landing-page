@@ -8,6 +8,7 @@ import { SiteFooter } from './components/SiteFooter';
 import { WaitlistPage } from './components/WaitlistPage';
 import { ConfirmationScreen } from './components/ConfirmationScreen';
 import { BlogPage } from './components/BlogPage';
+import { BlogArticlePage } from './components/BlogArticlePage';
 import { scrollToInstant } from './scrollToInstant';
 
 type View = 'landing' | 'waitlist' | 'confirmed';
@@ -42,8 +43,13 @@ function App() {
     return <WaitlistPage onClose={closeWaitlist} onConfirmed={() => setView('confirmed')} />;
   }
 
-  if (window.location.pathname.replace(/\/+$/, '') === '/blog') {
+  const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
+  if (pathname === '/blog') {
     return <BlogPage onJoinWaitlist={openWaitlist} />;
+  }
+
+  if (pathname === '/blog/slip-isnt-day-one-24-hours-after-relapse') {
+    return <BlogArticlePage onJoinWaitlist={openWaitlist} />;
   }
 
   return (

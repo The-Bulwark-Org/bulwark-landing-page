@@ -56,6 +56,9 @@ export function BlogPage({ onJoinWaitlist }: BlogPageProps) {
             {visiblePosts.map((post) => (
               <BlogPostCard key={post.slug} post={post} />
             ))}
+            {visiblePosts.length === 0 && (
+              <p className="blog-listing__empty">No articles in this category yet.</p>
+            )}
           </div>
         </section>
       </main>

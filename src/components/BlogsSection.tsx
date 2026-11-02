@@ -8,18 +8,11 @@ type BlogPost = {
 
 const posts: BlogPost[] = [
   {
-    image: '/assets/Article Image.png',
-    date: 'October 10, 2026',
-    readTime: '12 min read',
-    title: 'How Mindfulness Transforms Workplace Productivity',
-    href: '/blog',
-  },
-  {
-    image: '/assets/Article Image (1).png',
-    date: 'October 3, 2026',
-    readTime: '7 min read',
-    title: 'The Science of Habit Formation: Building a Better You',
-    href: '/blog',
+    image: '/assets/womanbrain.svg',
+    date: 'November 2, 2026',
+    readTime: '6 min read',
+    title: "A Slip Isn't Day One: What to Do in the 24 Hours After a Relapse",
+    href: '/blog/slip-isnt-day-one-24-hours-after-relapse',
   },
 ];
 
